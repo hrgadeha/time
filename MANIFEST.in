@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include time_tracking *.css
+recursive-include time_tracking *.csv
+recursive-include time_tracking *.html
+recursive-include time_tracking *.ico
+recursive-include time_tracking *.js
+recursive-include time_tracking *.json
+recursive-include time_tracking *.md
+recursive-include time_tracking *.png
+recursive-include time_tracking *.py
+recursive-include time_tracking *.svg
+recursive-include time_tracking *.txt
+recursive-exclude time_tracking *.pyc
