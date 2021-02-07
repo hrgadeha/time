@@ -22,12 +22,18 @@ def get_column():
 		_("Customer Code") + ":Data:200",
 		_("Order Qty") + ":Float:150",
 		_("Deliverd Qty") + ":Float:150",
-		_("Pending Qty") + ":Float:150"]
+		_("Pending Qty") + ":Float:150",
+		_("Balance Qty") + ":Float:150",
+		_("In Transit Qty") + ":Float:150",
+		_("Projected Qty") + ":Float:150"]
 
 def get_data(conditions,filters):
 	oem = frappe.db.sql("""select so.customer_name,so.name,so.transaction_date,soi.tentative_date,so.po_no,so.po_date,soi.item_code,
-			soi.customer_item_code,soi.qty,soi.delivered_qty, (soi.qty - soi.delivered_qty) from `tabSales Order` so, 
-			`tabSales Order Item` soi where so.docstatus = 1 and so.name = soi.parent 
+			soi.customer_item_code,soi.qty,soi.delivered_qty, (soi.qty - soi.delivered_qty),
+			(select sum(actual_qty) from `tabBin` where item_code = soi.item_code),
+			(select sum(ordered_qty) from `tabBin` where item_code = soi.item_code),
+			(select sum(projected_qty) from `tabBin` where item_code = soi.item_code) from `tabSales Order` so, 
+			`tabSales Order Item` soi where so.docstatus = 1 and so.status != "Closed" and so.name = soi.parent 
 			%s;"""%conditions, filters, as_list=1)
 
 	return oem
