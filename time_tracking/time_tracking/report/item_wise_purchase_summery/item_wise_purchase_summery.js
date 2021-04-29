@@ -9,6 +9,12 @@ frappe.query_reports["Item Wise Purchase Summery"] = {
             			"label": __("Supplier"),
             			"fieldtype": "Link",
 				"options": "Supplier"
-        	}
+        	},
+		{
+                                "fieldname": "item_code",
+                                "label": __("Item"),
+                                "fieldtype": "Link",
+                                "options": "Item"
+                }
 	]
 };

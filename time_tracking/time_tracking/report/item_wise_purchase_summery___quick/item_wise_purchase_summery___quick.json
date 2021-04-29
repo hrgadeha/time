@@ -1,0 +1,41 @@
+{
+ "add_total_row": 1,
+ "creation": "2021-04-10 17:36:28.603732",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Shreelight",
+ "modified": "2021-04-10 22:13:26.905194",
+ "modified_by": "Administrator",
+ "module": "Time Tracking",
+ "name": "Item Wise Purchase Summery - Quick",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "select\n\tsitem.item_code as \"Item Code:Data:120\",\n\tsitem.item_name as \"Item Name:Data:220\",\n\tavg(sitem.rate) as \"Avg Sales Rate:Currency:140\",\n\tavg(sitem.discount_percentage) as \"Avg Sales Dis:Percent:140\",\n\tavg(pitem.rate) as \"Avg Purchase Rate:Currency:140\",\n\tavg(pitem.discount_percentage) as \"Avg Purchase Dis:Percent:140\"\nfrom\n\t`tabSales Order Item` sitem\nINNER JOIN \n\t`tabPurchase Order Item` pitem\nON\n    sitem.item_code = pitem.item_code\ngroup by\n    sitem.item_code;",
+ "ref_doctype": "Purchase Order",
+ "report_name": "Item Wise Purchase Summery - Quick",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Maintenance User"
+  },
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Stock User"
+  },
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Marketing"
+  }
+ ]
+}

@@ -13,19 +13,22 @@ def execute(filters=None):
 
 def get_column():
         return [_("Supplier") + ":Data:180",
-		_("Item Code") + ":Link/Item:200",
-		_("Average Rate") + ":Currency:180",
-		_("Average Discount") + ":Percent:180",
-		_("Order Qty") + ":Float:150",
-		_("Received Qty") + ":Float:150",
-		_("In Transit Qty") + ":Float:150"]
+		_("Item Code") + ":Data:120",
+		_("Item Name") + ":Data:200",
+		_("Average Rate") + ":Currency:140",
+		_("Average Discount") + ":Percent:140"]
 
 def get_data(conditions,filters):
-	oem = frappe.db.sql("""select so.supplier_name,soi.item_code,
-			avg(soi.rate),avg(soi.discount_percentage),sum(soi.qty),sum(soi.received_qty),(sum(soi.qty) - sum(soi.received_qty)) 
+	oem = frappe.db.sql("""select
+			so.supplier_name,
+			soi.item_code,
+			soi.item_name,
+			avg(soi.rate),
+			avg(soi.discount_percentage)
 			from `tabPurchase Order` so,
-			`tabPurchase Order Item` soi where so.docstatus = 1 and so.name = soi.parent %s 
-			group by soi.item_code;"""%conditions, filters, as_list=1)
+			`tabPurchase Order Item` soi where so.docstatus = 1 
+			and so.name = soi.parent 
+			%s group by soi.item_code, so.supplier;"""%conditions, filters, as_list=1)
 
 	return oem
 
@@ -33,5 +36,6 @@ def get_conditions(filters):
 	conditions = ""
 	if filters.get("supplier"):
 		conditions += " and so.supplier = %(supplier)s"
-
+	if filters.get("item_code"):
+		conditions += " and soi.item_code = %(item_code)s"
 	return conditions, filters

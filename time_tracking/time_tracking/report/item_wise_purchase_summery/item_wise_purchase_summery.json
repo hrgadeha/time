@@ -1,5 +1,5 @@
 {
- "add_total_row": 0,
+ "add_total_row": 1,
  "creation": "2020-11-04 14:03:15.605957",
  "disable_prepared_report": 0,
  "disabled": 0,
@@ -8,7 +8,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letter_head": "Shreelight",
- "modified": "2020-11-04 15:48:26.374109",
+ "modified": "2021-04-10 20:19:47.472380",
  "modified_by": "Administrator",
  "module": "Time Tracking",
  "name": "Item Wise Purchase Summery",

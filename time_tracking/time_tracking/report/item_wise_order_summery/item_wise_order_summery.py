@@ -13,20 +13,24 @@ def execute(filters=None):
 
 def get_column():
         return [_("Customer") + ":Data:180",
-		_("Item Code") + ":Link/Item:200",
-		_("Customer Code") + ":Data:200",
-		_("Average Rate") + ":Currency:180",
-		_("Average Discount") + ":Percent:180",
-		_("Order Qty") + ":Float:150",
-		_("Deliverd Qty") + ":Float:150",
-		_("Pending Qty") + ":Float:150"]
+		_("Item Code") + ":Data:120",
+		_("Item Name") + ":Data:200",
+		_("Customer Code") + ":Data:120",
+		_("Average Rate") + ":Currency:140",
+		_("Average Discount") + ":Percent:140"]
 
 def get_data(conditions,filters):
-	oem = frappe.db.sql("""select so.customer_name,soi.item_code,
-			soi.customer_item_code,avg(soi.rate),avg(soi.discount_percentage),sum(soi.qty),sum(soi.delivered_qty),
-			(sum(soi.qty) - sum(soi.delivered_qty)) from `tabSales Order` so,
-			`tabSales Order Item` soi where so.docstatus = 1 and so.name = soi.parent %s
-			group by soi.item_code;"""%conditions, filters, as_list=1)
+	oem = frappe.db.sql("""select
+				so.customer_name,
+				soi.item_code,
+				soi.item_name,
+				soi.customer_item_code,
+				avg(soi.rate),
+				avg(soi.discount_percentage)
+				from `tabSales Order` so,
+				`tabSales Order Item` soi 
+			where so.docstatus = 1 and so.name = soi.parent %s
+			group by soi.item_code, so.customer;"""%conditions, filters, as_list=1)
 
 	return oem
 
